@@ -19,12 +19,12 @@ class StudentController extends Controller
             ],
         ];
         
-
         return view('students.index', [
             'title' => $title,
             'students' => $students,
         ]);
     }
+
     public function show(string $id)
     {
         $title = 'Sistem Sekolah - Detail Siswa';
@@ -32,32 +32,35 @@ class StudentController extends Controller
             'title'=> $title
         ]);
     }
+
     public function create()
     {
         $title = 'Sistem Sekolah - Tambah Siswa';
-
         return view('students.create', [
             'title' => $title,
         ]);
     }
+
     public function edit(string $id)
     {
         $title = 'Sistem Sekolah - Edit Siswa';
-
         return view('students.edit', [
             'title' => $title,
         ]);
     }
-    public function store()
+
+    public function store(Request $request) 
     {
-        return "Menampilkan halaman penambahan data siswa";
+        return "Melakukan penambahan data siswa baru";
     }
-    public function update(string $id)
+
+    public function update(Request $request, string $id)
     {
         return "Melakukan perubahan data siswa";
     }
-    public function delete(string $id)
+
+    public function destroy(string $id)
     {
-        return "menghapus data siswa";
+        return "Menghapus data siswa";
     }
-}  
+}
