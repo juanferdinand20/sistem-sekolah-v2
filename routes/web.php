@@ -29,7 +29,7 @@ Route::prefix('students')->name('students.')->group(function () {
 Route::prefix('teachers')->name('teachers.')->group(function () {
     Route::get('/', [TeacherController::class, 'index'])->name('index');
     
-    // Halaman Tambah Guru (HARUS DI ATAS {id})
+   
     Route::get('/create', [TeacherController::class, 'create'])->name('create');
     
     Route::get('/{id}', [TeacherController::class, 'show'])->name('show');
@@ -44,7 +44,7 @@ Route::resource('majors', MajorController::class);
 Route::prefix('classes')->name('classes.')->group(function () {
     Route::get('/', IndexController::class)->name('index');
     
-    // Halaman Tambah Kelas (HARUS DI ATAS {id})
+   
     Route::get('/create', CreateController::class)->name('create');
     
     Route::get('/{id}', ShowController::class)->name('show');
