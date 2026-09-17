@@ -42,8 +42,8 @@
     </div> 
 
     <div> 
-        <label for="phone" class="mb-1.5 block text-xs font-semibold uppercase tracking-[0.1em] text-[#16213A]">No. Telepon</label> 
-        <input type="text" id="phone" name="phone" value="081234560001" 
+        <label for="phone_number" class="mb-1.5 block text-xs font-semibold uppercase tracking-[0.1em] text-[#16213A]">No. Telepon</label>
+           <input type="text" id="phone_number" name="phone_number" value="081234560001" 
             class="w-full border border-[#D9D6CD] bg-[#FCFBF8] px-3.5 py-2.5 text-sm focus:border-[#A16207] focus:bg-white focus:outline-none"> 
     </div> 
 
