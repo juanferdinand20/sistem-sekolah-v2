@@ -11,12 +11,21 @@ use App\Http\Controllers\SchoolClass\StoreController;
 use App\Http\Controllers\SchoolClass\UpdateController;
 use App\Http\Controllers\SchoolClass\DestroyController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
  
 Route::get('/', function () {
     return view('welcome');
 });
- 
-Route::prefix('students')->name('students.')->group(function () {
+
+// Authentication
+Route::get('/login', [AuthController::class, 'loginView'])->name('login-view')->middleware('guest');
+Route::post('/login', [AuthController::class, 'loginPost'])->name('login-post')->middleware('guest');
+Route::get('/register', [AuthController::class, 'registerView'])->name('register-view')->middleware('guest');
+Route::post('/register', [AuthController::class, 'registerPost'])->name('register-post')->middleware('guest');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+
+ // Student Management
+Route::prefix('students')->middleware(['role:student,teacher', 'auth'])->name('students.')->group(function () {
     Route::get('/', [StudentController::class, 'index'])->name('index');
     Route::get('/create', [StudentController::class, 'create'])->name('create'); // Create di atas {id}
     Route::get('/{student}/edit', [StudentController::class, 'edit'])->name('edit');
@@ -26,12 +35,9 @@ Route::prefix('students')->name('students.')->group(function () {
     Route::delete('/{student}', [StudentController::class, 'destroy'])->name('destroy');
 });
  
-Route::prefix('teachers')->name('teachers.')->group(function () {
+Route::prefix('teachers')->middleware(['role:teacher', 'auth'])->name('teachers.')->group(function () {
     Route::get('/', [TeacherController::class, 'index'])->name('index');
-    
-   
     Route::get('/create', [TeacherController::class, 'create'])->name('create');
-    
     Route::get('/{id}', [TeacherController::class, 'show'])->name('show');
     Route::get('/{id}/edit', [TeacherController::class, 'edit'])->name('edit');
     Route::post('/', [TeacherController::class, 'store'])->name('store');
@@ -39,14 +45,11 @@ Route::prefix('teachers')->name('teachers.')->group(function () {
     Route::delete('/{id}', [TeacherController::class, 'destroy'])->name('destroy');
 });
  
-Route::resource('majors', MajorController::class);
+Route::resource('majors', MajorController::class)->middleware(['role:teacher', 'auth']);
  
-Route::prefix('classes')->name('classes.')->group(function () {
+Route::prefix('classes')->middleware(['role:teacher', 'auth'])->name('classes.')->group(function () {
     Route::get('/', IndexController::class)->name('index');
-    
-   
     Route::get('/create', CreateController::class)->name('create');
-    
     Route::get('/{id}', ShowController::class)->name('show');
     Route::get('/{id}/edit', EditController::class)->name('edit');
     Route::post('/', StoreController::class)->name('store');
